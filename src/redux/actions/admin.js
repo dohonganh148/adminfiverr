@@ -17,4 +17,13 @@ export const fetchUpdateUser = (id) => async (dispatch) => {
         type: actions.GET_UPDATE_USER,
         payload: res.data.content,
     })
-}
+};
+
+// GET API lay danh sach dich vu
+export const fetchServiceList = (pageIndex, pageSize) => async(dispatch) => {
+    let res = await service.getServiceList(pageIndex, pageSize);
+    res.data && dispatch({
+        type: actions.SERVICE_LIST,
+        payload: res.data.content,
+    });
+};

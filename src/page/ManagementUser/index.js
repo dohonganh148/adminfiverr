@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import s from "./ManagementUser.module.scss";
-import { Button, Input, Table, Modal } from "antd";
+import { Button, Input, Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserList} from "redux/actions/admin";
 import { BsPencilSquare } from "react-icons/bs";
@@ -92,8 +92,6 @@ const ManagementUser = () => {
     }
   };
 
-  console.log(userList);
-
   return (
     <div className={s.content}>
       <h3>Quản lý người dùng </h3>
@@ -102,7 +100,7 @@ const ManagementUser = () => {
       </div>
       <div className={s.search}>
         <Search
-          placeholder="Nhập vào tài khoản hoặc họ tên người dùng"
+          placeholder="Nhập vào tài khoản"
           // onSearch={onSearch}
           enterButton
         />
@@ -112,7 +110,7 @@ const ManagementUser = () => {
           columns={columns}
           dataSource={data}
           onChange={onChange}
-          pagination={{ pageSize: 6, total: userList.totalRow }}
+          pagination={{ pageSize, total: userList.totalRow }}
         />
       </div>
     </div>

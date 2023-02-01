@@ -126,7 +126,7 @@ const LayoutAdmin = () => {
           ></Breadcrumb>
           <Content
             style={{
-              padding: 16,
+              padding: 8,
               minHeight: "calc(100vh - 128px)",
               background: colorBgContainer,
               marginTop: 30

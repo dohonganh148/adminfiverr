@@ -1,12 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from "./UpdateUser.module.scss";
 import { Button, Form, Input } from "antd";
+import { useNavigate, useParams } from 'react-router-dom';
+import { getUpdateUser, updateUser } from 'services/admin';
+import { useDispatch } from 'react-redux';
+import { fetchUserList } from 'redux/actions/admin';
 
 const UpdateUser = () => {
+  
+  const params = useParams();
   const [form] = Form.useForm();
-  const onFinish = async (values) => {
-    console.log(values)
+  const setInititalValue = async () => {
+    let res = await getUpdateUser(params.id);
+    console.log(res);
+    if (res.data && res.status === 200) {
+      const user = res.data.content;
+      form.setFieldsValue({
+        id: user.id,
+        name: user.name,
+        password: user.password,
+        email: user.email,
+        phone: user.phone,
+        birthday: user.birthday,
+        gender: user.gender,
+        role: user.role,
+        skill: user.skill,
+        certification: user.certification,
+      });
+    }
   };
+  useEffect( () => {
+    setInititalValue()
+  }, []);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const onFinish = async (values) => {
+    const params = {
+      name: values.name,
+      password: values.password,
+      email: values.email,
+      phone: values.phone,
+      birthday: values.birthday,
+      gender: values.gender,
+      role: values.role,
+      skill: values.skill,
+      certification: values.certification,
+    };
+    let res = await updateUser(params);
+    if (res.data.statusCode === 200) {
+      dispatch(fetchUserList(1,6));
+      navigate("/");
+    }
+  }; 
+
   return (
     <div className={s.updateUser}>
       <h3>Cập nhật thông tin người dùng</h3>
