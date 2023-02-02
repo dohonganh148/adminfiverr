@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import s from "./Layout.module.scss";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu, theme, Dropdown } from "antd";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ManagementUser from "page/ManagementUser";
 import ManagementService from "page/ManagementService";
 import UpdateUser from "page/UpdateUser";
 import UpdateService from "page/UpdateService";
 import Login from "page/Login";
 import Signup from "page/Signup";
+import { logoutAction } from "redux/actions/authen";
 
 const { Header, Content, Sider } = Layout;
 
@@ -28,11 +29,11 @@ const LayoutAdmin = () => {
     },
     {
       label: (
-        <NavLink to="/service">
-          <div>Quản lý dịch vụ</div>
+        <NavLink to="/jobs">
+          <div>Quản lý công việc</div>
         </NavLink>
       ),
-      link: "/service",
+      link: "/jobs",
       key: "10",
     },
   ];
@@ -42,29 +43,46 @@ const LayoutAdmin = () => {
   const handleClick = (e) => {
     setCurrent(e.key);
   };
+  const profile = useSelector(state => state?.authen?.profile);
+
+  // logout
+  const handleLogout = () => {
+    dispatch(logoutAction());
+  };
+  
+  const items = [
+    {
+      key: "1",
+      label: <div onClick={handleLogout}>Đăng xuất</div>,
+    },
+  ];
+
   return (
     <Layout>
-      <Header className="header" style={{
-            position: "fixed",
-            width: "100%",
-            zIndex: 10,
-          }}>
+      <Header
+        className="header"
+        style={{
+          position: "fixed",
+          width: "100%",
+          zIndex: 10,
+        }}
+      >
         <div className={s.navbar}>
           <Link to="/" className={s.logo}>
             Admin Fiverr
           </Link>
-          {/* {profile ? (
-            <div className={s.profile}>
-              <span className={s.user}>Hello, {profile?.hoTen}</span>
-              <div className={s.dropdownMenu}>
-                <button className={s.menuItem} onClick={handleLogout}>
-                  Đăng xuất
-                </button>
-              </div>
-            </div>
-          ) :  */}
-          {/* ( */}
-          <div className={s.content}>
+          {profile ? (<div className={s.profile}>
+            <Dropdown
+              menu={{
+                items,
+              }}
+              placement="bottom"
+              arrow
+            >
+              <p className={s.user}>Hello, {profile.user.name}</p>
+            </Dropdown>
+          </div>) : (
+            <div className={s.content}>
             <NavLink
               to="/login"
               className={({ isActive }) => {
@@ -85,7 +103,7 @@ const LayoutAdmin = () => {
               Đăng ký
             </NavLink>
           </div>
-          {/* ) */}
+          )} 
         </div>
       </Header>
       <Layout>
@@ -96,7 +114,7 @@ const LayoutAdmin = () => {
             position: "fixed",
             minHeight: "100vh",
             marginTop: 64,
-            paddingTop: 20
+            paddingTop: 20,
           }}
           className="sider"
         >
@@ -129,12 +147,12 @@ const LayoutAdmin = () => {
               padding: 8,
               minHeight: "calc(100vh - 128px)",
               background: colorBgContainer,
-              marginTop: 30
+              marginTop: 30,
             }}
           >
             <Routes>
               <Route exact path="/" element={<ManagementUser />} />
-              <Route path="/service" element={<ManagementService />} />
+              <Route path="/jobs" element={<ManagementService />} />
               <Route path="/updateuser/:id" element={<UpdateUser />} />
               <Route path="/updateservice/:id" element={<UpdateService />} />
               <Route path="/login" element={<Login />} />

@@ -11,6 +11,8 @@ import { deleteService } from 'services/admin';
 const ManagementService = () => {
   const { Search } = Input;
 
+  const profile = useSelector(state => state?.authen?.profile);
+
   const columns = [
     {
       title: <div className={s.titleId}>ID</div>,
@@ -48,6 +50,7 @@ const ManagementService = () => {
       title: <div className={s.titleOption}>Tuỳ chọn</div>,
       dataIndex: "action",
       width: "10%",
+      hidden: profile?.user.role !== "ADMIN",
     },
   ];
   const [pageIndex, setPageIndex] = useState(1);
@@ -98,16 +101,15 @@ const ManagementService = () => {
 
   return (
     <div className={s.content}>
-      <h4>Quản lý dịch vụ</h4>
-      <div className={s.btn}>
+      <h4>Quản lý công việc</h4>
+      { profile?.user.role !== "ADMIN" ? ( <div className={s.btn}>
         <Link to="/">
-          <Button type="primary">Thêm dịch vụ</Button>
+          <Button type="primary">Thêm công việc</Button>
         </Link>
-      </div>
+      </div>) : ""}
       <div className={s.search}>
         <Search
-          placeholder="Nhập vào tên dịch vụ"
-          // onSearch={onSearch}
+          placeholder="Nhập vào tên công việc"
           enterButton
         />
       </div>

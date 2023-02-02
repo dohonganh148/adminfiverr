@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 
 const ManagementUser = () => {
   const { Search } = Input;
+  
+  const profile = useSelector(state => state?.authen?.profile);
 
   const columns = [
     {
@@ -43,7 +45,7 @@ const ManagementUser = () => {
       title: <div className={s.titleOption}>Tuỳ chọn</div>,
       dataIndex: "action",
       width: "10%",
-      // hidden: auth?.maLoaiNguoiDung !== "QuanTri",
+      hidden: profile?.user.role !== "ADMIN",
     },
   ];
   const dispatch = useDispatch();
@@ -95,9 +97,9 @@ const ManagementUser = () => {
   return (
     <div className={s.content}>
       <h3>Quản lý người dùng </h3>
-      <div className={s.btn}>
+      { profile?.user.role !== "ADMIN" ? ( <div className={s.btn}>
           <Button type="primary">Thêm quản trị viên</Button>
-      </div>
+      </div>) : ""}
       <div className={s.search}>
         <Search
           placeholder="Nhập vào tài khoản"
