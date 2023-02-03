@@ -1,14 +1,42 @@
-import React from "react";
-import s from "./UpdateService.module.scss";
+import React from 'react';
+import s from "./AddService.module.scss";
 import { Button, Form, Input, InputNumber } from "antd";
+import { v4 as uuid } from "uuid";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addService } from 'services/admin';
+import { fetchServiceList } from 'redux/actions/admin';
 
-const UpdateService = () => {
+const AddService = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [form] = Form.useForm();
-  const onFinish = () => {};
+
+  const onFinish = async (values) => {
+    const id = uuid();
+    const params = {
+        id,
+        tenCongViec: values.tenCongViec,
+        hinhAnh: values.hinhAnh,
+        danhGia: values.danhGia,
+        giaTien: values.giaTien,
+        nguoiTao: values.nguoiTao,
+        moTa: values.moTa,
+        moTaNgan: values.moTaNgan,
+        maChiTietLoaiCongViec: values.maChiTietLoaiCongViec,
+        saoCongViec: values.saoCongViec,
+    };
+    let res = await addService(params);
+    console.log(res);
+    if(res?.data?.statusCode === 200) {
+      dispatch(fetchServiceList(4,1));
+      navigate("/service")
+    }
+  };
 
   return (
-    <div className={s.updateService}>
-      <h3>Cập nhật công việc</h3>
+    <div className={s.addService}>
+      <h3>Thêm công việc</h3>
       <div>
         <Form
           labelCol={{ span: 8 }}
@@ -21,14 +49,9 @@ const UpdateService = () => {
           <Form.Item
             label="ID"
             name="id"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập tài khoản!",
-              },
-            ]}
+            hidden
           >
-            <Input disabled />
+            <Input />
           </Form.Item>
           <Form.Item
             label="Tên công việc"
@@ -43,6 +66,13 @@ const UpdateService = () => {
             <Input />
           </Form.Item>
 
+          <Form.Item
+            label="Hình ảnh"
+            name="hinhAnh"
+          >
+            <Input placeholder='Nhập link ảnh'/>
+          </Form.Item>
+
           <Form.Item label="Đánh giá" name="danhGia">
             <InputNumber />
           </Form.Item>
@@ -53,6 +83,7 @@ const UpdateService = () => {
           <Form.Item name="nguoiTao" hidden>
             <InputNumber value={0} />
           </Form.Item>
+
 
           <Form.Item
             label="Mô tả"
@@ -77,13 +108,13 @@ const UpdateService = () => {
 
           <Form.Item wrapperCol={{ offset: 9, span: 16 }}>
             <Button type="primary" htmlType="submit" className={s.button}>
-              Cập nhật
+              Thêm công việc
             </Button>
           </Form.Item>
         </Form>
       </div>
     </div>
   );
-};
+}
 
-export default UpdateService;
+export default AddService

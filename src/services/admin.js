@@ -25,7 +25,7 @@ export const deleteUser = async (id) => {
         method: "DELETE",
         url: apiPath.DELETE_USER,
         params: {
-          id: id,
+          id,
         }
       });
       return res;
@@ -33,6 +33,20 @@ export const deleteUser = async (id) => {
       console.log(err);
     }
   }
+
+// ADD USER
+export const addUser = async (values) => {
+  try{
+    const res = await requester({
+      method: "POST",
+      url: apiPath.ADD_USER,
+      data: values,
+    });
+    return res;
+  } catch(err) {
+    console.log(err)
+  }
+};
 
 // GET API lay thong tin User de update
 export const getUpdateUser = async (id) => {
@@ -57,6 +71,22 @@ export const updateUser = async (values) => {
         method: "PUT",
         url: apiPath.UPDATE_USER,
         data: values,
+      });
+      return res;
+    } catch(err) {
+      console.log(err)
+    }
+  }
+
+  // lấy danh sách người dùng để search
+  export const getUserListSearch = async (keyword) => {
+    try{
+      const res = await requester({
+        method: "GET",
+        url: apiPath.USER_LIST,
+        params: {
+          keyword,
+        }
       });
       return res;
     } catch(err) {
@@ -96,3 +126,17 @@ export const deleteService = async (id) => {
     console.log(err);
   }
 }
+
+// ADD SERVICE
+export const addService = async (values) => {
+  try{
+    const res = await requester({
+      method: "POST",
+      url: apiPath.ADD_SERVICE,
+      data: values,
+    });
+    return res;
+  } catch(err) {
+    console.log(err)
+  }
+};

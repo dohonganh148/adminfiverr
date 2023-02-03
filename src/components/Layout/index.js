@@ -7,6 +7,8 @@ import ManagementUser from "page/ManagementUser";
 import ManagementService from "page/ManagementService";
 import UpdateUser from "page/UpdateUser";
 import UpdateService from "page/UpdateService";
+import AddUser from "page/AddUser";
+import AddService from "page/AddService";
 import Login from "page/Login";
 import Signup from "page/Signup";
 import { logoutAction } from "redux/actions/authen";
@@ -154,7 +156,9 @@ const LayoutAdmin = () => {
               <Route exact path="/" element={<ManagementUser />} />
               <Route path="/jobs" element={<ManagementService />} />
               <Route path="/updateuser/:id" element={<UpdateUser />} />
-              <Route path="/updateservice/:id" element={<UpdateService />} />
+              <Route path="/updatejob/:id" element={<UpdateService />} />
+              <Route path="/adduser" element={<AddUser />} />
+              <Route path="/addjob" element={<AddService />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
             </Routes>

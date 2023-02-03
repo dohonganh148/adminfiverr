@@ -12,6 +12,7 @@ const ManagementService = () => {
   const { Search } = Input;
 
   const profile = useSelector(state => state?.authen?.profile);
+  console.log(profile);
 
   const columns = [
     {
@@ -63,8 +64,8 @@ const ManagementService = () => {
   }, [dispatch]);
 
   const onChange = (pagination, sorter) => {
-    dispatch(fetchServiceList(pagination.pageIndex, pagination.pageSize));
-    setPageIndex(pagination.pageIndex);
+    dispatch(fetchServiceList(pagination.current, pagination.pageSize));
+    setPageIndex(pagination.current);
   };
   const data = serviceList?.data?.map((item, index) => {
     return {
@@ -78,7 +79,7 @@ const ManagementService = () => {
       action: (
         <div className={s.option}>
           <div className={s.update}>
-          <Link to={`/updateservice/${item.id}`}>
+          <Link to={`/updatejob/${item.id}`}>
               <BsPencilSquare />
             </Link>
           </div>
@@ -103,7 +104,7 @@ const ManagementService = () => {
     <div className={s.content}>
       <h4>Quản lý công việc</h4>
       { profile?.user.role !== "ADMIN" ? ( <div className={s.btn}>
-        <Link to="/">
+        <Link to="/addjob">
           <Button type="primary">Thêm công việc</Button>
         </Link>
       </div>) : ""}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import s from "./ManagementUser.module.scss";
 import { Button, Input, Table } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserList} from "redux/actions/admin";
+import { fetchUserList, fetchUserListSearch} from "redux/actions/admin";
 import { BsPencilSquare } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import {deleteUser} from "services/admin";
@@ -12,6 +12,7 @@ const ManagementUser = () => {
   const { Search } = Input;
   
   const profile = useSelector(state => state?.authen?.profile);
+  console.log(profile)
 
   const columns = [
     {
@@ -58,8 +59,8 @@ const ManagementUser = () => {
   }, [dispatch]);
 
   const onChange = (pagination, sorter) => {
-    dispatch(fetchUserList(pagination.pageIndex, pagination.pageSize));
-    setPageIndex(pagination.pageIndex);
+    dispatch(fetchUserList(pagination.current, pagination.pageSize));
+    setPageIndex(pagination.current);
   };
   const data = userList?.data?.map((item, index) => {
     return {
@@ -94,16 +95,26 @@ const ManagementUser = () => {
     }
   };
 
+  const onSearch = (value) => {
+    if (!value) {
+      dispatch(fetchUserList(6, 1));
+    } else {
+      dispatch(fetchUserListSearch(value));
+    }
+  };
+
   return (
     <div className={s.content}>
-      <h3>Quản lý người dùng </h3>
+      <h4>Quản lý người dùng</h4>
       { profile?.user.role !== "ADMIN" ? ( <div className={s.btn}>
+          <Link to="/adduser">
           <Button type="primary">Thêm quản trị viên</Button>
+          </Link>
       </div>) : ""}
       <div className={s.search}>
         <Search
           placeholder="Nhập vào tài khoản"
-          // onSearch={onSearch}
+          onSearch={onSearch}
           enterButton
         />
       </div>

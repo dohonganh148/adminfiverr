@@ -19,6 +19,15 @@ export const fetchUpdateUser = (id) => async (dispatch) => {
     })
 };
 
+// GET API lay danh sach nguoi dung de search
+export const fetchUserListSearch = (keyword) => async (dispatch) => {
+    let res = await service.getUserListSearch(keyword);
+    res.data && dispatch({
+        type: actions.USER_LIST_SEARCH,
+        payload: res.data.content,
+    })
+}
+
 // GET API lay danh sach dich vu
 export const fetchServiceList = (pageIndex, pageSize) => async(dispatch) => {
     let res = await service.getServiceList(pageIndex, pageSize);
