@@ -4,7 +4,6 @@ import { Button, Form, Input, Select } from "antd";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addUser } from 'services/admin';
-import { v4 as uuid } from "uuid";
 import { fetchUserList } from 'redux/actions/admin';
 
 const AddUser = () => {
@@ -14,21 +13,18 @@ const AddUser = () => {
     const navigate = useNavigate();
 
     const onFinish = async (values) => {
-        const id = uuid();
         const params = {
-            id,
             name: values.name,
             password: values.password,
             email: values.email,
             phone: values.phone,
             birthday: values.birthday,
-            gender: values.gender,
+            gender: values.gender === "male" ? true : false,
             role: "ADMIN",
             skill: values.skill,
             certification: values.certification,
         };
         let res = await addUser(params);
-        console.log(res);
         if(res?.data?.statusCode === 200) {
           dispatch(fetchUserList(6, 1));
           navigate("/");

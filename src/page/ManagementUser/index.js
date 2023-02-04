@@ -12,7 +12,6 @@ const ManagementUser = () => {
   const { Search } = Input;
 
   const profile = useSelector((state) => state?.authen?.profile);
-  console.log(profile);
 
   const columns = [
     {
@@ -96,7 +95,7 @@ const ManagementUser = () => {
     if (!value) {
       dispatch(fetchUserList(6, 1));
     } else {
-      dispatch(fetchUserListSearch(value));
+      dispatch(fetchUserListSearch(value, pageIndex, pageSize));
     }
   };
   return (

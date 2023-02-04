@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import s from "./UpdateUser.module.scss";
 import { Button, Form, Input } from "antd";
-import { useNavigate, useParams } from 'react-router-dom';
-import { getUpdateUser, updateUser } from 'services/admin';
-import { useDispatch } from 'react-redux';
-import { fetchUserList } from 'redux/actions/admin';
+import { useNavigate, useParams } from "react-router-dom";
+import { getUpdateUser, updateUser } from "services/admin";
+import { useDispatch } from "react-redux";
+import { fetchUserList } from "redux/actions/admin";
 
 const UpdateUser = () => {
-  
   const params = useParams();
   const [form] = Form.useForm();
   const setInititalValue = async () => {
@@ -29,8 +28,8 @@ const UpdateUser = () => {
       });
     }
   };
-  useEffect( () => {
-    setInititalValue()
+  useEffect(() => {
+    setInititalValue();
   }, []);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,12 +45,12 @@ const UpdateUser = () => {
       skill: values.skill,
       certification: values.certification,
     };
-    let res = await updateUser(params);
+    let res = await updateUser(params, values.id);
     if (res.data.statusCode === 200) {
-      dispatch(fetchUserList(1,6));
+      dispatch(fetchUserList(1, 6));
       navigate("/");
     }
-  }; 
+  };
 
   return (
     <div className={s.updateUser}>
@@ -68,6 +67,7 @@ const UpdateUser = () => {
           <Form.Item
             label="ID"
             name="id"
+            hidden
             rules={[
               {
                 required: true,
@@ -162,7 +162,7 @@ const UpdateUser = () => {
         </Form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UpdateUser
+export default UpdateUser;

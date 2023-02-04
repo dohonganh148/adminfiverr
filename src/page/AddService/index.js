@@ -1,7 +1,6 @@
 import React from 'react';
 import s from "./AddService.module.scss";
 import { Button, Form, Input, InputNumber } from "antd";
-import { v4 as uuid } from "uuid";
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addService } from 'services/admin';
@@ -13,9 +12,7 @@ const AddService = () => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
-    const id = uuid();
     const params = {
-        id,
         tenCongViec: values.tenCongViec,
         hinhAnh: values.hinhAnh,
         danhGia: values.danhGia,
@@ -28,9 +25,9 @@ const AddService = () => {
     };
     let res = await addService(params);
     console.log(res);
-    if(res?.data?.statusCode === 200) {
+    if(res?.data?.content) {
       dispatch(fetchServiceList(4,1));
-      navigate("/service")
+      navigate("/jobs")
     }
   };
 

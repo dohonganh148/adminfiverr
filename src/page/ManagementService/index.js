@@ -12,7 +12,6 @@ const ManagementService = () => {
   const { Search } = Input;
 
   const profile = useSelector((state) => state?.authen?.profile);
-  console.log(profile);
 
   const columns = [
     {
