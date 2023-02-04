@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import s from "./ManagementService.module.scss";
 import { Button, Input, Table } from "antd";
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchServiceList } from 'redux/actions/admin';
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchServiceList } from "redux/actions/admin";
 import { BsPencilSquare } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { deleteService } from 'services/admin';
+import { deleteService } from "services/admin";
 
 const ManagementService = () => {
   const { Search } = Input;
 
-  const profile = useSelector(state => state?.authen?.profile);
+  const profile = useSelector((state) => state?.authen?.profile);
   console.log(profile);
 
   const columns = [
@@ -51,16 +51,16 @@ const ManagementService = () => {
       title: <div className={s.titleOption}>Tuỳ chọn</div>,
       dataIndex: "action",
       width: "10%",
-      hidden: profile?.user.role !== "ADMIN",
+      hidden: profile?.role === "ADMIN" ? false : true,
     },
-  ];
+  ].filter((item) => !item.hidden);;
   const [pageIndex, setPageIndex] = useState(1);
   const pageSize = 4;
-  const dispatch = useDispatch()
-;  const serviceList = useSelector(state => state.admin.serviceList);
+  const dispatch = useDispatch();
+  const serviceList = useSelector((state) => state.admin.serviceList);
 
-  useEffect( () => {
-    dispatch(fetchServiceList(1, 4))
+  useEffect(() => {
+    dispatch(fetchServiceList(1, 4));
   }, [dispatch]);
 
   const onChange = (pagination, sorter) => {
@@ -79,14 +79,11 @@ const ManagementService = () => {
       action: (
         <div className={s.option}>
           <div className={s.update}>
-          <Link to={`/updatejob/${item.id}`}>
+            <Link to={`/updatejob/${item.id}`}>
               <BsPencilSquare />
             </Link>
           </div>
-          <div
-            onClick={() => handleDelete(item.id)}
-            className={s.delete}
-          >
+          <div onClick={() => handleDelete(item.id)} className={s.delete}>
             <RiDeleteBin6Line />
           </div>
         </div>
@@ -99,20 +96,20 @@ const ManagementService = () => {
       dispatch(fetchServiceList(pageIndex, pageSize));
     }
   };
-
   return (
     <div className={s.content}>
       <h4>Quản lý công việc</h4>
-      { profile?.user.role !== "ADMIN" ? ( <div className={s.btn}>
-        <Link to="/addjob">
-          <Button type="primary">Thêm công việc</Button>
-        </Link>
-      </div>) : ""}
+      {profile?.role === "ADMIN" ? (
+        <div className={s.btn}>
+          <Link to="/addjob">
+            <Button type="primary">Thêm công việc</Button>
+          </Link>
+        </div>
+      ) : (
+        ""
+      )}
       <div className={s.search}>
-        <Search
-          placeholder="Nhập vào tên công việc"
-          enterButton
-        />
+        <Search placeholder="Nhập vào tên công việc" enterButton />
       </div>
       <div className={s.table}>
         <Table
@@ -123,7 +120,7 @@ const ManagementService = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ManagementService
+export default ManagementService;

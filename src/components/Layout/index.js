@@ -81,7 +81,7 @@ const LayoutAdmin = () => {
               placement="bottom"
               arrow
             >
-              <p className={s.user}>Hello, {profile.user.name}</p>
+              <p className={s.user}>Hello, {profile?.name}</p>
             </Dropdown>
           </div>) : (
             <div className={s.content}>

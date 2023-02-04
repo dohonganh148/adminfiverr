@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import s from "./ManagementUser.module.scss";
 import { Button, Input, Table } from "antd";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserList, fetchUserListSearch} from "redux/actions/admin";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserList, fetchUserListSearch } from "redux/actions/admin";
 import { BsPencilSquare } from "react-icons/bs";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import {deleteUser} from "services/admin";
-import { Link } from 'react-router-dom';
+import { deleteUser } from "services/admin";
+import { Link } from "react-router-dom";
 
 const ManagementUser = () => {
   const { Search } = Input;
-  
-  const profile = useSelector(state => state?.authen?.profile);
-  console.log(profile)
+
+  const profile = useSelector((state) => state?.authen?.profile);
+  console.log(profile);
 
   const columns = [
     {
@@ -46,16 +46,16 @@ const ManagementUser = () => {
       title: <div className={s.titleOption}>Tuỳ chọn</div>,
       dataIndex: "action",
       width: "10%",
-      hidden: profile?.user.role !== "ADMIN",
+      hidden: profile?.role === "ADMIN" ? false : true,
     },
-  ];
+  ].filter((item) => !item.hidden);
   const dispatch = useDispatch();
   const [pageIndex, setPageIndex] = useState(1);
   const pageSize = 6;
-  const userList = useSelector(state => state.admin.userList);
-  
+  const userList = useSelector((state) => state.admin.userList);
+
   useEffect(() => {
-    dispatch(fetchUserList(1,6))
+    dispatch(fetchUserList(1, 6));
   }, [dispatch]);
 
   const onChange = (pagination, sorter) => {
@@ -73,14 +73,11 @@ const ManagementUser = () => {
       action: (
         <div className={s.option}>
           <div className={s.update}>
-          <Link to={`/updateuser/${item.id}`}>
+            <Link to={`/updateuser/${item.id}`}>
               <BsPencilSquare />
             </Link>
           </div>
-          <div
-            onClick={() => handleDelete(item.id)}
-            className={s.delete}
-          >
+          <div onClick={() => handleDelete(item.id)} className={s.delete}>
             <RiDeleteBin6Line />
           </div>
         </div>
@@ -102,15 +99,18 @@ const ManagementUser = () => {
       dispatch(fetchUserListSearch(value));
     }
   };
-
   return (
     <div className={s.content}>
       <h4>Quản lý người dùng</h4>
-      { profile?.user.role !== "ADMIN" ? ( <div className={s.btn}>
+      {profile?.role === "ADMIN" ? (
+        <div className={s.btn}>
           <Link to="/adduser">
-          <Button type="primary">Thêm quản trị viên</Button>
+            <Button type="primary">Thêm quản trị viên</Button>
           </Link>
-      </div>) : ""}
+        </div>
+      ) : (
+        ""
+      )}
       <div className={s.search}>
         <Search
           placeholder="Nhập vào tài khoản"
@@ -127,7 +127,7 @@ const ManagementUser = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ManagementUser
+export default ManagementUser;

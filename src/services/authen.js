@@ -20,8 +20,7 @@ export const getProfile = async (id) => {
     try{
         const res = await requester({
             method: "GET",
-            url: apiPath.PROFILE_ACTION,
-            data: id,
+            url: `${apiPath.PROFILE_ACTION}/${id}`,
         });
         return res;
     } catch(err) {
