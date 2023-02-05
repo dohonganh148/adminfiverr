@@ -67,12 +67,6 @@ const UpdateUser = () => {
             label="ID"
             name="id"
             hidden
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập tài khoản!",
-              },
-            ]}
           >
             <Input disabled />
           </Form.Item>

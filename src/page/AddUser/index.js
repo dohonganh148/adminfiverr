@@ -123,7 +123,6 @@ const AddUser = () => {
             >
             <Option value="male">Male</Option>
             <Option value="female">Female</Option>
-            <Option value="other">Other</Option>
             </Select>
         </Form.Item>
 
