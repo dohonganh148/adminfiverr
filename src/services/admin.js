@@ -136,3 +136,30 @@ export const addService = async (values) => {
     console.log(err);
   }
 };
+
+// GET API lay thong tin Service de update
+export const getServiceDetail = async (id) => {
+  try {
+    const res = await requester({
+      method: "GET",
+      url: `${apiPath.GET_SERVICE_DETAIL}/${id}`,
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// UPDATE SERVICE
+export const updateService = async (values, id) => {
+  try {
+    const res = await requester({
+      method: "PUT",
+      url: `${apiPath.UPDATE_SERVICE}/${id}`,
+      data: values,
+    });
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};

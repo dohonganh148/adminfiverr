@@ -7,7 +7,7 @@ const apiPath = {
     SERVICE_LIST: "/api/cong-viec/phan-trang-tim-kiem",
     DELETE_SERVICE: "/api/cong-viec",
     ADD_SERVICE: "/api/cong-viec",
-    GET_UPDATE_SERVICE: "/api/cong-viec",
+    GET_SERVICE_DETAIL: "/api/cong-viec",
     UPDATE_SERVICE: "/api/cong-viec",
     PROFILE: "/api/auth/signin",
     PROFILE_ACTION: "/api/users",

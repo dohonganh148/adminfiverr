@@ -4,6 +4,7 @@ const initialState = {
   userList: {},
   getUpdateUser: {},
   serviceList: [],
+  getServiceDetail: {},
 };
 
 const reducer = (state = initialState, { type, payload }) => {
@@ -23,6 +24,11 @@ const reducer = (state = initialState, { type, payload }) => {
         ...state,
         serviceList: payload,
       };
+      case actions.GET_SERVICE_DETAIL:
+        return {
+          ...state,
+          getServiceDetail: payload,
+        };
 
     default:
       return { ...state };

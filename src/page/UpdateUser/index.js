@@ -11,7 +11,6 @@ const UpdateUser = () => {
   const [form] = Form.useForm();
   const setInititalValue = async () => {
     let res = await getUpdateUser(params.id);
-    console.log(res);
     if (res.data && res.status === 200) {
       const user = res.data.content;
       form.setFieldsValue({

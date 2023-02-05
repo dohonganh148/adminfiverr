@@ -41,3 +41,13 @@ export const fetchServiceList = (pageIndex, pageSize) => async (dispatch) => {
       payload: res.data.content,
     });
 };
+
+
+export const fetchServiceDetail = (id) => async (dispatch) => {
+    let res = await service.getServiceDetail(id);
+    res.data &&
+      dispatch({
+        type: actions.GET_SERVICE_DETAIL,
+        payload: res.data.content,
+      });
+  };

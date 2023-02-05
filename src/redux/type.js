@@ -7,7 +7,7 @@ const actions = {
     UPDATE_USER: `${sliceName}/UPDATE_USER`,
     USER_LIST_SEARCH: `${sliceName}/USER_LIST_SEARCH`,
     SERVICE_LIST: `${sliceName}/SERVICE_LIST`,
-    GET_UPDATE_SERVICE: `${sliceName}/GET_UPDATE_SERVICE`,
+    GET_SERVICE_DETAIL: `${sliceName}/GET_SERVICE_DETAIL`,
     UPDATE_SERVICE: `${sliceName}/UPDATE_SERVICE`,
     SET_PROFILE: `${sliceName2}/SET_PROFILE`,
 };
