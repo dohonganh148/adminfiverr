@@ -93,7 +93,7 @@ const ManagementUser = () => {
 
   const onSearch = (value) => {
     if (!value) {
-      dispatch(fetchUserList(6, 1));
+      dispatch(fetchUserList(1, 6));
     } else {
       dispatch(fetchUserListSearch(value, pageIndex, pageSize));
     }

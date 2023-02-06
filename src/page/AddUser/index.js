@@ -144,10 +144,10 @@ const AddUser = () => {
           </Form.Item>
 
           <Form.Item label="Skills"
-            name="skill">
+            name="skill" hidden>
             <Input />
           </Form.Item>
-          <Form.Item name="certification" label="Certification">
+          <Form.Item name="certification" label="Certification" hidden>
             <Input />
           </Form.Item>
 
